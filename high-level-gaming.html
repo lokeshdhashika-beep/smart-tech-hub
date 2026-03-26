@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>92K Elite Beast - Smart Tech Hub</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --pro-blue: #00f2fe;
+            --pro-gold: #ffc900;
+            --pro-dark: #000000;
+            --primary: #00f2fe;
+        }
+
+        body {
+            background: #05080c;
+            color: #fff;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Ambient Background Orbs */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.4;
+            animation: orb-drift 20s infinite alternate ease-in-out;
+        }
+        .orb-1 { top: -20%; left: -10%; background: rgba(0, 242, 254, 0.5); }
+        .orb-2 { bottom: -20%; right: -10%; background: rgba(0, 210, 255, 0.4); animation-delay: -5s; }
+        .orb-3 { top: 40%; left: 40%; width: 400px; height: 400px; background: rgba(0, 150, 254, 0.3); animation-delay: -10s; }
+
+        @keyframes orb-drift {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.2) translate(50px, -50px); }
+            100% { transform: scale(0.9) translate(-50px, 50px); }
+        }
+
+        .elite-hero {
+            height: 650px;
+            width: 100%;
+            position: relative;
+            background: linear-gradient(135deg, rgba(5, 8, 12, 0.85), rgba(0, 242, 254, 0.1)), url('https://images.unsplash.com/photo-1587202372162-4b2005e0466e?auto=format&fit=crop&q=90&w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 2px solid rgba(0, 242, 254, 0.3);
+            box-shadow: 0 10px 50px rgba(0, 242, 254, 0.1);
+        }
+
+        .hero-floating-content {
+            text-align: center;
+            z-index: 10;
+            padding: 50px 70px;
+            background: rgba(10, 14, 23, 0.7);
+            backdrop-filter: blur(25px);
+            border-radius: 40px;
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            max-width: 900px;
+            box-shadow: 0 0 60px rgba(0, 242, 254, 0.2), inset 0 0 20px rgba(255,255,255,0.05);
+            transform: translateY(20px);
+            animation: floatIn 1s forwards;
+        }
+
+        @keyframes floatIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero-floating-content h4 {
+            color: #1c5e7b;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .hero-floating-content h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        /* Benchmark Section */
+        .bench-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .bench-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .bench-box:hover {
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 10px 40px rgba(0, 242, 254, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .bench-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--pro-blue);
+        }
+
+        .bench-item {
+            margin-bottom: 25px;
+        }
+
+        .bench-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2099f0, #00d2ff);
+            width: 0;
+            transition: width 2s cubic-bezier(0.1, 0.5, 0.2, 1);
+        }
+
+        /* Spec Grid */
+        .spec-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .spec-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spec-card:hover {
+            background: rgba(160, 32, 240, 0.05);
+            border-color: #a020f0;
+            transform: scale(1.02);
+            box-shadow: inset 0 0 20px rgba(160, 32, 240, 0.05), 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .spec-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 242, 254, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .spec-info h4 {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .spec-info p {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .spec-price-tag {
+            margin-left: auto;
+            background: rgba(255, 201, 0, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
+            color: var(--pro-gold);
+            font-weight: 800;
+            font-family: 'Outfit';
+            font-size: 14px;
+        }
+
+        /* Build Summary Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .receipt-modal {
+            background: #0f1419;
+            width: 90%;
+            max-width: 550px;
+            border-radius: 30px;
+            border: 1px solid var(--primary);
+            padding: 40px;
+            color: #fff;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 16px;
+        }
+
+        .receipt-price {
+            color: #4320f0;
+            font-weight: 800;
+            font-family: 'Outfit';
+            font-size: 18px;
+            text-shadow: 0 0 10px rgba(67, 32, 240, 0.3);
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            color: #fff;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ambient-bg">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+    </div>
+
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Home Hub</a>
+
+    <section class="elite-hero">
+        <div class="hero-floating-content">
+            <h4>Next-Gen Powerhouse</h4>
+            <h1>THE 92K ELITE BEAST</h1>
+            <p style="font-size: 20px; opacity: 0.8; margin-bottom: 30px;">Play GTA 6 Ready. Engineered for Pro Blender,
+                Photoshop, and 4K Content Creation. The ultimate high-tier masterpiece.</p>
+            <button class="primary-btn-text"
+                style="width: auto; padding: 12px 0; font-size: 22px; background: transparent; border: none; color: var(--primary); font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-bottom: 2px solid transparent;"
+                onmouseover="this.style.color='#fff'; this.style.borderBottomColor='var(--primary)'; this.style.transform='translateY(-2px)'"
+                onmouseout="this.style.color='var(--primary)'; this.style.borderBottomColor='transparent'; this.style.transform='translateY(0)'"
+                onclick="showEliteSummary()">CLAIM THIS BEAST <i class="fas fa-dna"
+                    style="margin-left: 10px;"></i></button>
+        </div>
+    </section>
+
+    <div class="bench-grid">
+        <div class="bench-box">
+            <div class="bench-title"><i class="fas fa-gamepad"></i> Next-Gen Gaming (Ultra)</div>
+
+            <div class="bench-item">
+                <div class="bench-label"><span>GTA 6 Speculative (4K Ready)</span> <span>95+ FPS</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 95%;"></div>
+                </div>
+            </div>
+
+            <div class="bench-item">
+                <div class="bench-label"><span>Cyberpunk 2077 (Path Tracing)</span> <span>82 FPS</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 82%;"></div>
+                </div>
+            </div>
+
+            <div class="bench-item">
+                <div class="bench-label"><span>Ray Tracing Overdrive</span> <span>ELITE</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bench-box">
+            <div class="bench-title"><i class="fas fa-brain"></i> Pro Creation (32GB DDR5)</div>
+
+            <div class="bench-item">
+                <div class="bench-label"><span>Blender Render Cycles</span> <span>6x Faster</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%; background: var(--pro-gold);"></div>
+                </div>
+            </div>
+
+            <div class="bench-item">
+                <div class="bench-label"><span>Photoshop Generative AI</span> <span>Instant</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 98%; background: var(--pro-gold);"></div>
+                </div>
+            </div>
+
+            <div class="bench-item">
+                <div class="bench-label"><span>4K Multi-Layer Editing</span> <span>Smooth</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 95%; background: var(--pro-gold);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="spec-container">
+        <h2 style="font-family: 'Outfit'; font-size: 32px; font-weight: 900; margin-bottom: 40px; text-align: center;">
+            Elite Hardware Inventory</h2>
+        <div class="spec-grid">
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-microchip"></i></div>
+                <div class="spec-info">
+                    <h4>Processor</h4>
+                    <p>AMD Ryzen 5 9600X</p>
+                </div>
+                <div class="spec-price-tag">₹21,000</div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-vr-cardboard"></i></div>
+                <div class="spec-info">
+                    <h4>Graphics</h4>
+                    <p>AMD RX 9060XT 16GB</p>
+                </div>
+                <div class="spec-price-tag">₹36,000</div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-database"></i></div>
+                <div class="spec-info">
+                    <h4>Memory</h4>
+                    <p>32GB G.SKILL Ripjaws V DDR5</p>
+                </div>
+                <div class="spec-price-tag">₹9,800</div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-tablet-alt"></i></div>
+                <div class="spec-info">
+                    <h4>Motherboard</h4>
+                    <p>ASUS Prime B650M-R DDR5</p>
+                </div>
+                <div class="spec-price-tag">₹7,500</div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-bolt"></i></div>
+                <div class="spec-info">
+                    <h4>Storage</h4>
+                    <p>Crucial P3 1TB NVMe M.2</p>
+                </div>
+                <div class="spec-price-tag">₹5,000</div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-snowflake"></i></div>
+                <div class="spec-info">
+                    <h4>Cooling</h4>
+                    <p>CM V4 Alpha 3DHP</p>
+                </div>
+                <div class="spec-price-tag">₹3,000</div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-plug"></i></div>
+                <div class="spec-info">
+                    <h4>Power</h4>
+                    <p>Corsair CX750 750W PSU</p>
+                </div>
+                <div class="spec-price-tag">₹6,000</div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-desktop"></i></div>
+                <div class="spec-info">
+                    <h4>Cabinet</h4>
+                    <p>MSI PRO FORGE M050A</p>
+                </div>
+                <div class="spec-price-tag">₹3,000</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="elite-modal">
+        <div class="receipt-modal">
+            <h2
+                style="font-family: 'Outfit'; font-weight: 900; margin-bottom: 20px; text-align: center; color: #a020f0;">
+                ELITE BUILD INVOICE</h2>
+            <div id="receipt-items"></div>
+            <div class="receipt-row"
+                style="border-top: 2px dashed #333; margin-top: 20px; font-size: 24px; font-weight: 900;">
+                <span>Total Payload</span>
+                <span id="receipt-total" style="color: #4320f0;">₹0</span>
+            </div>
+            <div style="margin-top: 40px; display: flex; gap: 20px;">
+                <button class="primary-btn" style="flex: 2; height: 50px; background: var(--primary); color: #000; font-weight: 800; border-radius: 12px; border: none; cursor: pointer;"
+                    onclick="dispatchElite()">DISPATCH TO
+                    CART</button>
+                <button
+                    style="flex: 1; background: transparent; border: 1px solid #333; color: #fff; border-radius: 12px; cursor: pointer;"
+                    onclick="closeModal()">ABORT</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Seed DB on start
+        DB.init();
+
+        const ELITE_BUILD_DATA = [
+            { id: 'cpu-elite-9600x', name: 'Ryzen 5 9600X', price: 21000 },
+            { id: 'gpu-elite-9060xt', name: 'RX 9060XT 16GB', price: 36000 },
+            { id: 'mobo-elite-b650m', name: 'ASUS B650M-R', price: 7500 },
+            { id: 'ram-elite-gskill', name: '32GB G.SKILL DDR5', price: 9800 },
+            { id: 'ssd-elite-p3', name: 'Crucial P3 1TB NVMe', price: 5000 },
+            { id: 'cooler-elite-v4', name: 'CM V4 Alpha', price: 3000 },
+            { id: 'psu-elite-cx750', name: 'Corsair CX750W', price: 6000 },
+            { id: 'case-elite-forge', name: 'MSI FORGE Case', price: 3000 }
+        ];
+
+        function showEliteSummary() {
+            const container = document.getElementById('receipt-items');
+            const totalEl = document.getElementById('receipt-total');
+            let html = '';
+            let total = 0;
+
+            ELITE_BUILD_DATA.forEach(item => {
+                html += `
+                    <div class="receipt-row">
+                        <span style="color: #ccc;">${item.name}</span>
+                        <span class="receipt-price">₹${item.price.toLocaleString()}</span>
+                    </div>
+                `;
+                total += item.price;
+            });
+
+            container.innerHTML = html;
+            totalEl.innerText = `₹${total.toLocaleString()}`;
+            document.getElementById('elite-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('elite-modal').classList.remove('active');
+        }
+
+        function dispatchElite() {
+            let cart = DB.getCart() || [];
+            ELITE_BUILD_DATA.forEach(item => {
+                const product = DB.getProduct(item.id);
+                if (product) {
+                    const existing = cart.find(c => c.id === item.id);
+                    if (existing) existing.qty += 1;
+                    else cart.push({ ...product, qty: 1 });
+                }
+            });
+            DB.saveCart(cart);
+
+            // Success Animation
+            const btn = document.querySelector('.receipt-modal .primary-btn');
+            btn.innerHTML = 'ELITE UNIT DISPATCHED! <i class="fas fa-check"></i>';
+            btn.style.background = '#00ff88';
+
+            setTimeout(() => {
+                window.location.href = 'index.html#cart';
+            }, 800);
+        }
+
+        // Stats Animation
+        window.addEventListener('scroll', () => {
+            const bars = document.querySelectorAll('.progress-fill');
+            bars.forEach(bar => {
+                const pos = bar.getBoundingClientRect().top;
+                if (pos < window.innerHeight - 100) {
+                    bar.style.width = bar.style.width;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

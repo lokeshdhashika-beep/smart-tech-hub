@@ -1,0 +1,17 @@
+{
+  "name": "smart-tech-hub",
+  "version": "1.0.0",
+  "description": "Smart Tech Hub served via Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "author": "Smart Tech Hub Team",
+  "license": "ISC"
+}

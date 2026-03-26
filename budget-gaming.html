@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Gaming - Smart Tech Hub</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --gaming-neon: #00d2ff;
+            --gaming-purple: #7000ff;
+            --gaming-orange: #ff9900;
+        }
+
+        body {
+            background: #05080d;
+        }
+
+        .budget-hero {
+            height: 550px;
+            width: 100%;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=90&w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 2px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .budget-hero::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(112, 0, 255, 0.15) 0%, transparent 70%);
+            top: -25%;
+            left: -25%;
+            animation: rotateGlow 20s infinite linear;
+        }
+
+        @keyframes rotateGlow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-banner-content {
+            text-align: center;
+            z-index: 10;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-banner-content h1 {
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, var(--gaming-neon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .hero-banner-content p {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .fps-container {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 40px;
+        }
+
+        .fps-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .fps-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gaming-neon);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .fps-value {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--gaming-neon);
+            font-family: 'Outfit';
+        }
+
+        .game-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .fps-bar-outer {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .fps-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gaming-neon), var(--gaming-purple));
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+
+        .spec-spotlight {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .spec-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .spec-item i {
+            font-size: 24px;
+            color: var(--gaming-purple);
+        }
+
+        .spec-item div h4 {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .spec-item div p {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .summary-modal {
+            background: #0a111a;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .summary-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .summary-header i {
+            font-size: 50px;
+            color: var(--gaming-neon);
+            margin-bottom: 15px;
+        }
+
+        .summary-list {
+            margin-bottom: 30px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 2px dashed rgba(255, 255, 255, 0.1);
+            font-size: 24px;
+            font-weight: 900;
+            font-family: 'Outfit';
+            color: #fff;
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: #fff;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-nav:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-nav"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+
+    <section class="budget-hero">
+        <div class="hero-banner-content">
+            <h4
+                style="color: var(--gaming-purple); font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px;">
+                The 30K Beast</h4>
+            <h1>Legendary Entry Level Build</h1>
+            <p>High performance doesn't have to break the bank. Play the world's most popular games with 100+ FPS on our
+                engineered budget masterpiece.</p>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <button class="primary-btn" style="width: auto; padding: 15px 40px; font-size: 20px;"
+                    onclick="showBuildSummary()">Claim This Build <i class="fas fa-rocket"
+                        style="margin-left: 10px;"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="summary-modal">
+        <div class="summary-modal">
+            <div class="summary-header">
+                <i class="fas fa-check-circle"></i>
+                <h2 style="font-family: 'Outfit'; font-weight: 900;">30K Beast Breakdown</h2>
+                <p style="color: var(--text-muted);">Verified Gaming Configuration</p>
+            </div>
+            <div class="summary-list" id="summary-list-items">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="summary-total">
+                <span>Total Build Cost</span>
+                <span id="summary-grand-total">₹0</span>
+            </div>
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+                <button class="primary-btn" style="flex: 2;" onclick="confirmAddToCart()">Confirm & Add <i
+                        class="fas fa-shopping-cart" style="margin-left: 10px;"></i></button>
+                <button class="secondary-btn"
+                    style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px; cursor: pointer;"
+                    onclick="closeModal()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fps-container">
+        <div class="fps-card">
+            <div class="game-title">Valorant</div>
+            <div class="fps-value" data-target="123">0</div>
+            <div style="color: var(--text-muted);">AVG FPS (1080p Low)</div>
+            <div class="fps-bar-outer">
+                <div class="fps-bar-inner" style="width: 82%;"></div>
+            </div>
+        </div>
+
+        <div class="fps-card">
+            <div class="game-title">GTA 5</div>
+            <div class="fps-value" data-target="72">0</div>
+            <div style="color: var(--text-muted);">AVG FPS (1080p Normal)</div>
+            <div class="fps-bar-outer">
+                <div class="fps-bar-inner" style="width: 60%;"></div>
+            </div>
+        </div>
+
+        <div class="fps-card">
+            <div class="game-title">God of War</div>
+            <div class="fps-value" data-target="45">0</div>
+            <div style="color: var(--text-muted);">AVG FPS (720p FSR)</div>
+            <div class="fps-bar-outer">
+                <div class="fps-bar-inner" style="width: 40%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="spec-spotlight">
+        <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 40px; text-align: center; font-family: 'Outfit';">
+            Master Specifications</h2>
+        <div class="spec-grid">
+            <div class="spec-item">
+                <i class="fas fa-microchip"></i>
+                <div>
+                    <h4>Processor</h4>
+                    <p>AMD Ryzen 5 5500GT</p>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-memory"></i>
+                <div>
+                    <h4>Memory</h4>
+                    <p>16GB DDR4 3200MHz RAM</p>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-hdd"></i>
+                <div>
+                    <h4>Storage</h4>
+                    <p>512GB NVMe M.2 SSD</p>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-tv"></i>
+                <div>
+                    <h4>Monitor</h4>
+                    <p>22" Full HD LED Display</p>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-plug"></i>
+                <div>
+                    <h4>Power</h4>
+                    <p>400W Efficiency PSU</p>
+                </div>
+            </div>
+            <div class="spec-item" style="border-color: rgba(255, 255, 255, 0.1);">
+                <i class="fas fa-rainbow"></i>
+                <div>
+                    <h4>Chassis</h4>
+                    <p>Premium RGB Cabinet</p>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-keyboard"></i>
+                <div>
+                    <h4>Peripherals</h4>
+                    <p>Gaming KB & Mouse</p>
+                </div>
+            </div>
+            <div class="spec-item">
+                <i class="fas fa-square-plus"></i>
+                <div>
+                    <h4>Motherboard</h4>
+                    <p>ASrock B450M-HDV</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shared JS -->
+    <script src="data.js"></script>
+    <script>
+        // Ensure DB is seeded with latest product IDs
+        DB.init();
+
+        // FPS Counter Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('.fps-value');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                const speed = 2000 / target;
+
+                const updateCount = () => {
+                    if (count < target) {
+                        count++;
+                        counter.innerText = count;
+                        setTimeout(updateCount, speed);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        });
+
+        // Build Items Data
+        const BUILD_ITEMS = [
+            { id: 'cpu-budget-30k', name: 'Ryzen 5 5500GT', price: 9500 },
+            { id: 'mobo-budget-30k', name: 'ASrock B450M Mobo', price: 4800 },
+            { id: 'ram-budget-30k', name: '16GB DDR4 RAM', price: 3200 },
+            { id: 'ssd-budget-30k', name: '512GB NVMe SSD', price: 2800 },
+            { id: 'case-budget-30k', name: 'Ant Esports Case', price: 2900 },
+            { id: 'smps-budget-30k', name: '400W Power Supply', price: 1400 },
+            { id: 'mon-budget-30k', name: '22" FHD Monitor', price: 5500 },
+            { id: 'kb-mouse-budget', name: 'Gaming KB & Mouse', price: 450 }
+        ];
+
+        function showBuildSummary() {
+            const listContainer = document.getElementById('summary-list-items');
+            const totalContainer = document.getElementById('summary-grand-total');
+            const modal = document.getElementById('summary-modal');
+
+            let html = '';
+            let total = 0;
+
+            BUILD_ITEMS.forEach(item => {
+                html += `
+                    <div class="summary-row">
+                        <span style="color: #fff; font-weight: 500;">${item.name}</span>
+                        <span style="color: var(--text-muted); font-size: 11px;">Included</span>
+                    </div>
+                `;
+                total += item.price;
+            });
+
+            listContainer.innerHTML = html;
+            totalContainer.innerText = `₹${total.toLocaleString()}`;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('summary-modal').classList.remove('active');
+        }
+
+        function confirmAddToCart() {
+            let cart = DB.getCart() || [];
+
+            BUILD_ITEMS.forEach(itemData => {
+                const product = DB.getProduct(itemData.id);
+                if (product) {
+                    const existing = cart.find(item => item.id === itemData.id);
+                    if (existing) {
+                        existing.qty += 1;
+                    } else {
+                        cart.push({ ...product, qty: 1 });
+                    }
+                }
+            });
+
+            DB.saveCart(cart);
+
+            // Animation/Effect
+            const btn = document.querySelector('.summary-modal button');
+            btn.innerHTML = 'Success! Redirecting... <i class="fas fa-check"></i>';
+            btn.style.background = '#00d2ff';
+
+            setTimeout(() => {
+                window.location.href = 'index.html#cart';
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

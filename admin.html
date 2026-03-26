@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Smart Tech Hub</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin-body">
+    <!-- Semiconductor Background (Applied via admin.css) -->
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar glass-panel">
+            <div class="admin-logo" onclick="window.location.href='index.html'"
+                style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-microchip" style="font-size: 24px; color: var(--primary);"></i>
+                <span
+                    style="background: var(--gradient-main); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">STH
+                    Admin</span>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-view="products">
+                    <i class="fas fa-box"></i> Products
+                </a>
+                <a href="#" class="nav-item" data-view="orders">
+                    <i class="fas fa-shopping-bag"></i> Orders
+                </a>
+                <a href="#" class="nav-item" data-view="inquiries">
+                    <i class="fas fa-envelope-open-text"></i> Direct Buy
+                </a>
+                <a href="#" class="nav-item" data-view="users">
+                    <i class="fas fa-users"></i> Registered Users
+                </a>
+                <a href="index.html" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Back to Store
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-content">
+
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="view-section">
+                <h1>Dashboard Overview</h1>
+
+                <div class="stats-grid">
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon" style="background: rgba(0, 217, 255, 0.2); color: var(--primary);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Revenue</h3>
+                            <p id="total-revenue">₹0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon" style="background: rgba(6, 255, 165, 0.2); color: var(--accent);">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Orders</h3>
+                            <p id="total-orders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon" style="background: rgba(157, 78, 221, 0.2); color: var(--secondary);">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Products</h3>
+                            <p id="total-products">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container glass-panel">
+                    <h2>Monthly Sales Report</h2>
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Products View -->
+            <div id="view-products" class="view-section hidden">
+                <div class="section-header">
+                    <h1>Product Catalog</h1>
+                    <button class="primary-btn" id="add-product-btn" style="width: auto;">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                </div>
+
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <!-- Products injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="view-orders" class="view-section hidden">
+                <div class="section-header">
+                    <h1>Recent Orders</h1>
+                    <button class="primary-btn" id="add-order-btn" style="width: auto;">
+                        <i class="fas fa-plus"></i> Add Manual Order
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- Orders injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inquiries View -->
+            <div id="view-inquiries" class="content-view hidden">
+                <h2 class="view-title">Direct Buy</h2>
+                <div class="glass-panel" style="padding: 0;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Status</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inquiries-table-body">
+                            <!-- Inquiries will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users View -->
+            <div id="view-users" class="view-section hidden">
+                <h1>Registered Users</h1>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Contact & Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Users injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-content glass-panel">
+            <h2 id="modal-title">Add Product</h2>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="product-name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="product-category" required>
+                            <!-- Options injected -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="product-price" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Stock</label>
+                        <input type="number" id="product-stock" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" id="product-image" placeholder="images/filename.jpg">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="product-desc" rows="3"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="cancel-product-btn">Cancel</button>
+                    <button type="submit" class="primary-btn" id="save-product-btn">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div class="modal-overlay" id="user-modal">
+        <div class="modal-content glass-panel" style="width: 600px;">
+            <h2 id="user-modal-title">Edit Customer</h2>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="user-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="user-email" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="user-role" required>
+                            <option value="client">Client</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="user-phone">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea id="user-address" rows="2"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" id="user-city">
+                    </div>
+                    <div class="form-group">
+                        <label>PIN Code</label>
+                        <input type="text" id="user-pin">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Landmark</label>
+                    <input type="text" id="user-landmark">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="cancel-user-btn">Cancel</button>
+                    <button type="submit" class="primary-btn" id="save-user-btn">Save Customer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal-overlay" id="order-details-modal">
+        <div class="modal-content glass-panel" style="width: 800px; max-width: 95vw;">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <span class="order-id-badge" id="details-order-id">#000000</span>
+            </div>
+            
+            <div class="order-info-grid">
+                <div class="info-group">
+                    <label>Customer Details</label>
+                    <p id="details-customer-name">Name</p>
+                    <p id="details-customer-email">Email</p>
+                    <p id="details-customer-phone">Phone</p>
+                </div>
+                <div class="info-group">
+                    <label>Shipping Address</label>
+                    <p id="details-customer-address">Address</p>
+                    <p id="details-customer-city-pin">City, PIN</p>
+                </div>
+                <div class="info-group">
+                    <label>Order Info</label>
+                    <p id="details-order-date">Date: </p>
+                    <p id="details-payment-method">Payment: </p>
+                    <p id="details-order-status">Status: </p>
+                </div>
+            </div>
+
+            <div class="order-items-container">
+                <label>Ordered Products</label>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-items-body">
+                        <!-- Items injected -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="text-align: right; font-weight: bold;">Grand Total:</td>
+                            <td id="details-order-total" style="font-weight: bold; color: var(--accent);">₹0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" id="close-details-btn">Close</button>
+                <button type="button" class="primary-btn" id="print-order-btn">
+                    <i class="fas fa-print"></i> Print Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Edit Modal -->
+    <div class="modal-overlay" id="order-edit-modal">
+        <div class="modal-content glass-panel">
+            <h2>Edit Order Status</h2>
+            <form id="order-edit-form">
+                <input type="hidden" id="edit-order-id">
+                
+                <div class="form-group">
+                    <label>Order Status</label>
+                    <select id="edit-order-status" required>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Returned">Returned</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Internal Note (Optional)</label>
+                    <textarea id="edit-order-note" rows="3" placeholder="Add a note about this order..."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="cancel-order-edit-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Update Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
